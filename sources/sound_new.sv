@@ -1,25 +1,23 @@
 module sound_new(
 	input clk,
 	input aud_en,
+	input rstn,
 	input [31:0] data_i,
 	output pwm
 		);
 
 
 	logic [9:0] cntr;
-	logic [3:0] duty [7:0];
-	assign {duty[3], duty[2],duty[1], duty[0]} = aud_en ? {data_i[31:24], data_i[23:16], data_i[15:8], data_i[7:0]} : 0;
+	logic [7:0] duty [3:0];
+	assign {duty[0], duty[1],duty[2], duty[3]} = {data_i[31:24], data_i[23:16], data_i[15:8], data_i[7:0]} ;
 
 	always@(posedge clk) begin
-		
-			cntr<=cntr+1;
-
-		
-
-
+		    
+			cntr<=(aud_en&rstn) ? cntr + 1 : 0;
+            
 	end
 
 
-	assign pwm = (cntr[7:0]<=duty[cntr[9:8]]);
+	assign pwm = aud_en ? (cntr[7:0]<=duty[cntr[9:8]]) : 0;
 
 endmodule

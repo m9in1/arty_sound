@@ -2,23 +2,23 @@ module sound_artyx(
 	input CLK100MHZ,
 	input BTNC,
 	input [0:0]SW,
-
+    //input temp_clk,
 	output AUD_PWM
 );
 
-logic clkdived;
+logic clkdived_data, clkdived_all;
 logic [31:0] count;
 logic [31:0] rd_data;
+logic aud_en_sync;
 
-sound #
-	(.DATA_WIDTH(8),	
-	.FIFO_DATA_WIDTH(32))
+
+sound_new
 	sound(
-			.clk(CLK100MHZ),
+			.clk(clkdived_all),
+			.aud_en(aud_en_sync),
 			.rstn(BTNC),
-			.aud_en(SW[0]),
-			.fifo_rd_data(rd_data),
-			.aud_pwm(AUD_PWM)
+			.data_i(rd_data),
+			.pwm(AUD_PWM)
 			);
 
 tact_data data(
@@ -28,17 +28,31 @@ tact_data data(
 
 
 
-clk_div clk_div(
-	.clkin(CLK100MHZ),
-	.rstn(BTNC),
-	.K(2),
-	.clkout(clkdived)
+clk_div clk_div_data(
+	.clk(clkdived_all),
+	.rst_n(BTNC),
+	.o_clk(clkdived_data)
+	);
+
+clk_div clk_div_all(
+	.clk(CLK100MHZ),
+	.rst_n(BTNC),
+	.o_clk(clkdived_all)
 	);
 
 
-always@(posedge clkdived or negedge BTNC) begin
-	if(BTNC) 	count<=count + 1;
-	else		count<=0;
+sync_trig sync(
+	.clk_all(clkdived_all),
+	.clk_data(clkdived_data),
+	.aud_en(SW[0]),
+	.aud_en_sync(aud_en_sync)
+
+	);
+
+
+always@(posedge clkdived_data or negedge BTNC) begin
+	if(BTNC&aud_en_sync) 	count<=count + 1;
+	else		    count<=0;
 
 end
 
