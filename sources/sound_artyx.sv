@@ -28,13 +28,18 @@ tact_data data(
 
 
 
-clk_div clk_div_data(
+clk_div 
+         #(.WIDTH(10),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
+          .N(1024))
+clk_div_data(
 	.clk(clkdived_all),
 	.rst_n(BTNC),
 	.o_clk(clkdived_data)
 	);
 
-clk_div clk_div_all(
+clk_div  #(.WIDTH(14),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
+          .N(8192))
+          clk_div_all(
 	.clk(CLK100MHZ),
 	.rst_n(BTNC),
 	.o_clk(clkdived_all)
@@ -51,8 +56,8 @@ sync_trig sync(
 
 
 always@(posedge clkdived_data or negedge BTNC) begin
-	if(BTNC&aud_en_sync) 	count<=count + 1;
-	else		    count<=0;
+	if(BTNC&aud_en_sync) 	 count<=count + 1;
+	else		             count<=0;
 
 end
 

@@ -1,11 +1,11 @@
-module clk_div   (
-  input  clk,
+module clk_div #(parameter WIDTH = 10,// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
+                parameter N     = 1024)// Частота принятия решения)  (
+  (input  clk,
   input  rst_n,
   output o_clk
 );
 
-parameter WIDTH = 10;// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
-parameter N     = 1024;// Частота принятия решения
+
 
 reg [WIDTH-1:0] cnt_p;
 reg [WIDTH-1:0] cnt_n;
