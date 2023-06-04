@@ -6,12 +6,15 @@ module sound_artyx(
 	output AUD_PWM
 );
 
+logic clkdived;
+logic [31:0] count;
+logic [31:0] rd_data;
 
 sound #
 	(.DATA_WIDTH(8),	
 	.FIFO_DATA_WIDTH(32))
 	sound(
-			.clk(clkdived),
+			.clk(CLK100MHZ),
 			.rstn(BTNC),
 			.aud_en(SW[0]),
 			.fifo_rd_data(rd_data),
@@ -23,17 +26,18 @@ tact_data data(
 	.RD(rd_data)
 	);
 
-logic clkdived;
+
 
 clk_div clk_div(
 	.clkin(CLK100MHZ),
-	.K(20000),
+	.rstn(BTNC),
+	.K(2),
 	.clkout(clkdived)
 	);
 
 
-always(posedge clkdived or negedge rstn) begin
-	if(rstn) 	count<=count + 1;
+always@(posedge clkdived or negedge BTNC) begin
+	if(BTNC) 	count<=count + 1;
 	else		count<=0;
 
 end

@@ -33,6 +33,7 @@ module tb_sound();
 		rstn=0;
 		waitin(2);
 		rstn=1;
+		aud_en=1;
 		
 
 

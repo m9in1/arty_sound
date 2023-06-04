@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module fifo2audpwm #(
+module sound #(
 parameter DATA_WIDTH = 8,
 parameter FIFO_DATA_WIDTH = 32
 ) (
