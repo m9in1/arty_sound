@@ -11,7 +11,7 @@ sound #
 	(.DATA_WIDTH(8),	
 	.FIFO_DATA_WIDTH(32))
 	sound(
-			.clk(CLK100MHZ),
+			.clk(clkdived),
 			.rstn(BTNC),
 			.aud_en(SW[0]),
 			.fifo_rd_data(rd_data),
@@ -23,8 +23,16 @@ tact_data data(
 	.RD(rd_data)
 	);
 
+logic clkdived;
 
-always(posedge clk or negedge rstn) begin
+clk_div clk_div(
+	.clkin(CLK100MHZ),
+	.K(20000),
+	.clkout(clkdived)
+	);
+
+
+always(posedge clkdived or negedge rstn) begin
 	if(rstn) 	count<=count + 1;
 	else		count<=0;
 
