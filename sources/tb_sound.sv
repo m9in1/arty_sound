@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module tb_sound();
-	logic clk, rstn, aud_en, temp_clk;
+	logic clk, rstn, aud_en;
 	logic aud_pwm;
 
 
@@ -14,7 +14,6 @@ module tb_sound();
 );
 
 	always #5 clk=~clk;
-    always #5120 temp_clk=~temp_clk;
     
 	task waitin(input integer num_clk);
 		integer i;
@@ -25,24 +24,16 @@ module tb_sound();
 
 	endtask
     
-    task waitin_mus(input integer num_clk);
-        integer i;
-		for(i = 0; i<num_clk; i=i+1) begin
-			@(posedge temp_clk);
-
-		end
-    
-    endtask
 
 	initial begin
 		clk=0;
 		aud_en=0;
 		rstn=1;
-		waitin(2);
+		waitin(10000);
 		rstn=0;
-		waitin(2);
+		waitin(1000);
 		rstn=1;
-		waitin(3);
+		waitin(300);
 		aud_en=1;
 		
 		

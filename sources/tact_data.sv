@@ -4,7 +4,7 @@ output logic [31:0] RD
     );
     
 
-    logic [31:0] RAM [0:255]; 
+    logic [31:0] RAM [0:90000]; 
     initial begin
         $readmemb("music.bin", RAM);
     end

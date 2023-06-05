@@ -29,7 +29,7 @@ tact_data data(
 
 
 clk_div 
-         #(.WIDTH(10),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
+         #(.WIDTH(11),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
           .N(1024))
 clk_div_data(
 	.clk(clkdived_all),
@@ -37,13 +37,13 @@ clk_div_data(
 	.o_clk(clkdived_data)
 	);
 
-clk_div  #(.WIDTH(14),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
-          .N(8192))
+clk_div  #(.WIDTH(3),// Максимальное значение счетчика: (2 ^ WIDTH) -1. Должен встретить N = <(2 ^ WIDTH)
+          .N(8))
           clk_div_all(
 	.clk(CLK100MHZ),
 	.rst_n(BTNC),
 	.o_clk(clkdived_all)
-	);
+	); 
 
 
 sync_trig sync(
