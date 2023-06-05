@@ -1,7 +1,7 @@
 import pydub
 import pickle
 
-with open('mus_nok.wav', 'rb') as f:
+with open('bud_last.wav', 'rb') as f:
     data = pydub.AudioSegment(f).export(format = 'raw').read()
 
 counter = 0

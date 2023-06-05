@@ -2,7 +2,6 @@ module sound_artyx(
 	input CLK100MHZ,
 	input BTNC,
 	input [0:0]SW,
-    //input temp_clk,
     output [15:0]LED,
 	output AUD_PWM
 );
@@ -43,7 +42,7 @@ clk_div_data(
 
 
 clk_div  #(.WIDTH(4),
-          .N(4))
+          .N(2))
 clk_div_all(
 			.clk(CLK100MHZ),
 			.rst_n(rstn),

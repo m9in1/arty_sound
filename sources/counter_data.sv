@@ -2,7 +2,7 @@ module counter_data(
 	input clk,
 	input rstn,
 	input en,
-	output [31:0] addr
+	output logic [31:0] addr
 	);
 
 
