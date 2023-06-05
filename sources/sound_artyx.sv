@@ -56,7 +56,7 @@ sync_trig sync(
 
 
 always@(posedge clkdived_data or negedge BTNC) begin
-	if(BTNC&aud_en_sync) 	 count<=count + 1;
+	if(!BTNC&aud_en_sync) 	 count<=count + 1;
 	else		             count<=0;
 
 end
