@@ -3,20 +3,23 @@ module sound_artyx(
 	input BTNC,
 	input [0:0]SW,
     //input temp_clk,
+    output [15:0]LED,
 	output AUD_PWM
 );
 
+
+logic rstn;
 logic clkdived_data, clkdived_all;
 logic [31:0] count;
 logic [31:0] rd_data;
 logic aud_en_sync;
-
+assign rstn=!BTNC;
 
 sound_new
 	sound(
 			.clk(clkdived_all),
 			.aud_en(aud_en_sync),
-			.rstn(BTNC),
+			.rstn(rstn),
 			.data_i(rd_data),
 			.pwm(AUD_PWM)
 			);
@@ -33,7 +36,7 @@ clk_div
           .N(1024))
 clk_div_data(
 	.clk(clkdived_all),
-	.rst_n(BTNC),
+	.rst_n(rstn),
 	.o_clk(clkdived_data)
 	);
 
@@ -41,7 +44,7 @@ clk_div  #(.WIDTH(4),
           .N(8))
 clk_div_all(
 	.clk(CLK100MHZ),
-	.rst_n(BTNC),
+	.rst_n(rstn),
 	.o_clk(clkdived_all)
 	); 
 
@@ -51,12 +54,12 @@ sync_trig sync(
 	.clk_data(clkdived_data),
 	.aud_en(SW[0]),
 	.aud_en_sync(aud_en_sync)
-
 	);
 
-
-always@(posedge clkdived_data or negedge BTNC) begin
-	if(!BTNC&aud_en_sync) 	 count<=count + 1;
+assign LED [14:0] = rd_data[14:0];
+assign LED[15:15] = BTNC; 
+always@(posedge clkdived_data or negedge rstn) begin
+	if(rstn&aud_en_sync) 	 count<=count + 1;
 	else		             count<=0;
 
 end

@@ -11,9 +11,9 @@ module sound_new(
 	logic [7:0] duty [3:0];
 	assign {duty[0], duty[1],duty[2], duty[3]} = {data_i[31:24], data_i[23:16], data_i[15:8], data_i[7:0]} ;
 
-	always@(posedge clk) begin
+	always@(posedge clk or negedge rstn) begin
 		    
-			cntr<=(aud_en&rstn) ? cntr + 1 : 0;
+			cntr<=(aud_en&&(rstn)) ? cntr + 1 : 0;
             
 	end
 

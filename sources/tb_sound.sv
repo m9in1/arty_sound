@@ -31,11 +31,11 @@ module tb_sound();
 		aud_en=0;
 		rstn=1'bx;
 		waitin(10000);
-		rstn=0;
+		rstn=1;
 		waitin(1000);
 		
 		waitin(300);
-		rstn=1;
+		rstn=0;
 		waitin(1000);
 		aud_en=1;
 		
