@@ -41,8 +41,9 @@ clk_div_data(
 			.o_clk(clkdived_data)
 			);
 
+
 clk_div  #(.WIDTH(4),
-          .N(8))
+          .N(4))
 clk_div_all(
 			.clk(CLK100MHZ),
 			.rst_n(rstn),
@@ -67,7 +68,7 @@ counter_data cntrd(
 			);
 
 assign LED [14:0] = rd_data[14:0];
-assign LED[15:15] = BTNC; 
+assign LED [15:15] = BTNC; 
 
 
 
