@@ -9,7 +9,6 @@ module tb_sound();
 	.CLK100MHZ(clk),//input CLK100MHZ,
 	.BTNC(rstn),//input BTNC,
 	.SW(aud_en),//input [0:0]SW,
-   // .temp_clk(temp_clk),
 	.AUD_PWM(aud_pwm)//output AUD_PWM
 );
 
