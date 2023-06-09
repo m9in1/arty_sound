@@ -1,4 +1,4 @@
-module sound_new(
+module bin2pwm_32bit(
 	input clk,
 	input aud_en,
 	input rstn,
